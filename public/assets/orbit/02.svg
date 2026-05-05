@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <radialGradient id="g2" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#0c2a3a"/>
+      <stop offset="60%" stop-color="#040818"/>
+      <stop offset="100%" stop-color="#020104"/>
+    </radialGradient>
+    <linearGradient id="rim2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6cf6ff"/>
+      <stop offset="100%" stop-color="#a070ff"/>
+    </linearGradient>
+    <filter id="glow2"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="800" height="800" fill="url(#g2)"/>
+  <g stroke="url(#rim2)" stroke-width="0.8" fill="none" opacity="0.6">
+    <path d="M0 300 L800 300 M0 350 L800 350 M0 400 L800 400 M0 450 L800 450 M0 500 L800 500"/>
+    <path d="M150 250 L150 550 M250 250 L250 550 M350 250 L350 550 M450 250 L450 550 M550 250 L550 550 M650 250 L650 550"/>
+  </g>
+  <g fill="#6cf6ff" opacity="0.85">
+    <circle cx="150" cy="300" r="3"/><circle cx="250" cy="350" r="4"/><circle cx="350" cy="400" r="6"/>
+    <circle cx="450" cy="350" r="4"/><circle cx="550" cy="400" r="5"/><circle cx="650" cy="450" r="3"/>
+    <circle cx="150" cy="450" r="3"/><circle cx="250" cy="500" r="3"/><circle cx="450" cy="500" r="4"/>
+  </g>
+  <g stroke="#ff5cd1" stroke-width="1.6" fill="none" opacity="0.9">
+    <path d="M150 300 Q300 200 350 400 T650 450"/>
+  </g>
+  <text x="400" y="660" text-anchor="middle" fill="#f4eee2" font-family="Space Grotesk, sans-serif" font-size="44" font-weight="500" letter-spacing="8">BANDWIDTH</text>
+  <text x="400" y="700" text-anchor="middle" fill="#b9b09f" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="6">03 / LOSSY BY DESIGN</text>
+</svg>
