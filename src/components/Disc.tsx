@@ -25,6 +25,30 @@ const RINGS = [
 ];
 
 /**
+ * Small emissive "windows" embedded on the rings — replicates the reference's
+ * dense panel detail. Deterministic so rebuilds stay stable.
+ */
+const EMBEDDED_PANELS: { angle: number; r: number; w: number; h: number; isPink: boolean }[] = (() => {
+  const arr: { angle: number; r: number; w: number; h: number; isPink: boolean }[] = [];
+  // Outer ring panels
+  const outerR = (RINGS[0].inner + RINGS[0].outer) / 2;
+  const outerAngles = [0.18, 0.42, 0.74, 1.06, 1.86, 2.18, 2.62, 2.96, 3.84, 4.22, 4.6, 5.04, 5.48, 5.86];
+  outerAngles.forEach((a, i) => {
+    arr.push({ angle: a, r: outerR, w: 0.07 + (i % 3) * 0.01, h: 0.022, isPink: i % 3 !== 0 });
+  });
+  // Mid ring panels (denser, smaller)
+  const midR = (RINGS[1].inner + RINGS[1].outer) / 2;
+  const midAngles = [
+    0.08, 0.32, 0.56, 0.82, 1.16, 1.42, 1.7, 2.0, 2.28, 2.56,
+    2.86, 3.16, 3.42, 3.7, 4.0, 4.28, 4.56, 4.84, 5.14, 5.46, 5.78, 6.04,
+  ];
+  midAngles.forEach((a, i) => {
+    arr.push({ angle: a, r: midR, w: 0.05 + (i % 2) * 0.015, h: 0.018, isPink: i % 5 < 2 });
+  });
+  return arr;
+})();
+
+/**
  * 3D disc inspired by the supplied reference: dark gunmetal body, three concentric
  * ring insets, two emissive arcs (one blue, one pink), faint panel seams. No segments.
  *
@@ -139,7 +163,7 @@ export function Disc({ onSettled }: { onSettled?: () => void }) {
           />
         </mesh>
 
-        {/* Panel seams — 8 thin radial slats at irregular angles, on the disc face */}
+        {/* Panel seams — radial slats on the disc face */}
         {[0.2, 0.95, 1.55, 2.4, 3.1, 3.85, 4.7, 5.55].map((angle, i) => {
           const dist = (RINGS[0].outer + RINGS[1].outer) * 0.5;
           return (
@@ -153,6 +177,23 @@ export function Disc({ onSettled }: { onSettled?: () => void }) {
             </mesh>
           );
         })}
+
+        {/* Embedded panel highlights — small emissive "windows" along the rings (matches reference) */}
+        {EMBEDDED_PANELS.map((p, i) => (
+          <mesh
+            key={`panel-${i}`}
+            position={[Math.cos(p.angle) * p.r, Math.sin(p.angle) * p.r, DEPTH / 2 + 0.011]}
+            rotation={[0, 0, p.angle + Math.PI / 2]}
+          >
+            <boxGeometry args={[p.w, p.h, 0.014]} />
+            <meshStandardMaterial
+              color={p.isPink ? pink : blue}
+              emissive={p.isPink ? pink : blue}
+              emissiveIntensity={p.isPink ? 1.6 : 1.4}
+              toneMapped={false}
+            />
+          </mesh>
+        ))}
 
         {/* Recessed inner well where the CRT screen sits */}
         <mesh position={[0, 0, DEPTH / 2 + 0.001]}>

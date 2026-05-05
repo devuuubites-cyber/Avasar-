@@ -4,6 +4,7 @@ import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing
 import { Disc } from './Disc';
 import { Dust } from './Dust';
 import { CenterScreen } from './CenterScreen';
+import { Environment } from './Environment';
 import { palette } from '@/lib/palette';
 
 export function Wheel() {
@@ -22,6 +23,7 @@ export function Wheel() {
       <pointLight position={[0, 0, 1.4]} intensity={0.6} color={palette.wheelGlow} distance={4} />
 
       <Suspense fallback={null}>
+        <Environment />
         <Disc onSettled={() => setSettled(true)} />
         <Dust />
         <CenterScreen settled={settled} />
